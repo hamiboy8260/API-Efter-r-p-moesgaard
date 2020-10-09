@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-9">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+    
+    
+    <title>Efterårs aktiviteter for børn</title>
+
+
+</head>
+
+<body>
+
+    <h1 id="hovedoverskift">Efteråret i Moesgaard</h1>
+
+    <!-- Vejret vil vises herunder -->
+    <div id="result"></div>
+
+    <script>
+        const token = "0656582de3d19a3a9a11eef7f258a63a"; // Gem din token i denne variabel 
+
+        const aarhus = "https://api.openweathermap.org/data/2.5/weather?q=Aarhus,DK&appid=" +
+            token +
+            "&units=metric";
+
+        $(document).ready(function() {
+
+            // Får vejr data
+            fetch(aarhus).then(response => {
+                return response.json();
+            }).then(data => {
+
+                // Arbejde med JSON data her
+                console.log(data); // Viser hvad der er i json
+
+                $('#result').append(
+                    '<div class="weatherInfo">' +
+                    data.weather[0].main +
+                    ' in ' +
+                    data.name +
+                    '<figure><img src="http://openweathermap.org/img/w/' +
+                    data.weather[0].icon +
+                    '.png" alt="The weather : ' +
+                    data.weather[0].main +
+                    '"></figure>' +
+                    '</div>');
+
+                
+
+            }).catch(err => {
+                //  evt. en Error meddelse
+                console.log('There was an error ...');
+            });
+
+        }); // dokument klar slut
+    </script>
+
+
+    <div id="container">
+        <h1>18 Oktober 2020</h1>
+        
+        <h3>Søndag d. 18 Oktober kl 17.00 vil der blive arrangeret forskellige aktiviteter på moesgaard i forbindelse med efteråeret. Tag børnene i hånden og mød op på Moesgaard. Der vil være masser af aktiviteter for både børnene. Alle er meget velkommen og det er gratis at deltage. Tag praktisk tøj på og hold øje med vejret her på vores side.   
+            
+            <br><br>
+            Adressen er: Moesgaard Allé 15, 8270 Højbjerg </h3>
+
+    </div>
+
+    <div class="wrapper">
+
+
+
+
+
+        <div class="gallery">
+            <a target="_blank" href="#">
+                <img src="image/Efter%C3%A5r%20b%C3%B8rn.jpg" alt="Oplev naturen" width="600" height="400">
+            </a>
+            <div class="desc">Oplev naturen</div>
+        </div>
+
+        <div class="gallery">
+            <a target="_blank" href="#">
+                <img src="image/b%C3%B8rn_ged.jpg" alt="Oplev dyrerne" width="600" height="400">
+            </a>
+            <div class="desc">Oplev dyrerne</div>
+        </div>
+
+        <div class="gallery">
+            <a target="_blank" href="#">
+                <img src="image/Barn-pynter-sm%C3%A5kager.jpg.jpeg" alt="bagning" width="600" height="400">
+            </a>
+            <div class="desc">Efterårsbagning</div>
+        </div>
+
+        <div class="gallery">
+            <a target="_blank" href="#">
+                <img src="image/maling.jpg" alt="Maling" width="600" height="400">
+            </a>
+            <div class="desc">Vær kreativ med maling</div>
+        </div>
+
+    </div>
+    
+    <br>
+
+
+    <h2> her finder du os :</h2>
+
+
+    
+    
+    <div id="map"></div>
+        <script>
+            mapboxgl.accessToken = 'pk.eyJ1IjoiaGFtaWQ4MjYwIiwiYSI6ImNrZnFrZXVvajBieGEzMm8wNXlidTRuaTkifQ.r8bqR0H67DtlDyU4vMrZcA';
+            var monument = [10.223086, 56.088562];
+            var map = new mapboxgl.Map({
+                container: 'map', // container id
+                style: 'mapbox://styles/hamid8260/ckfqkpwg116s419rnfk0y21rv', // style URL
+                center: monument, // start position [lng, lat]
+                zoom: 15 // start zoom
+        });
+            
+            
+         // Opret popuppen
+         var popup = new mapboxgl.Popup({ offset: 25 }).setText(
+         'Her finder aktiviteterne sted'
+        );
+            
+            // Opret DOM elementet for markeren
+           var el = document.createElement('div');
+           el.id = 'marker';
+            
+            // Opret marker
+            new mapboxgl.Marker(el)
+            .setLngLat(monument)
+            .setPopup(popup) // sets a popup on this marker
+            .addTo(map);
+            
+        </script>
+            
+           
+
+    
+
+
+
+
+
+
+    <footer>
+        &copy; Copyright 2020
+    </footer>
+
+</body>
+
+
+
+</html>
